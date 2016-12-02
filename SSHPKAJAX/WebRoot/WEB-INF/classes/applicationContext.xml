@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+	
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/sakila">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.ssh.sakila.pojo.Film</value>
+				<value>com.ssh.sakila.pojo.Rental</value>
+				<value>com.ssh.sakila.pojo.Address</value>
+				<value>com.ssh.sakila.pojo.City</value>
+				<value>com.ssh.sakila.pojo.Language</value>
+				<value>com.ssh.sakila.pojo.FilmCategory</value>
+				<value>com.ssh.sakila.pojo.Category</value>
+				<value>com.ssh.sakila.pojo.Staff</value>
+				<value>com.ssh.sakila.pojo.Payment</value>
+				<value>com.ssh.sakila.pojo.Inventory</value>
+				<value>com.ssh.sakila.pojo.FilmActor</value>
+				<value>com.ssh.sakila.pojo.FilmText</value>
+				<value>com.ssh.sakila.pojo.Customer</value>
+				<value>com.ssh.sakila.pojo.Country</value>
+				<value>com.ssh.sakila.pojo.Store</value>
+				<value>com.ssh.sakila.pojo.Actor</value>
+				<value>com.ssh.sakila.pojo.Staff</value>
+				<value>com.ssh.sakila.pojo.City</value>
+				<value>com.ssh.sakila.pojo.Country</value>
+				<value>com.ssh.sakila.pojo.Language</value>
+				<value>com.ssh.sakila.pojo.Film</value>
+				<value>com.ssh.sakila.pojo.Address</value>
+				<value>com.ssh.sakila.pojo.Rental</value>
+				<value>com.ssh.sakila.pojo.Category</value>
+				<value>com.ssh.sakila.pojo.FilmCategory</value>
+				<value>com.ssh.sakila.pojo.Store</value>
+				<value>com.ssh.sakila.pojo.Actor</value>
+				<value>com.ssh.sakila.pojo.Inventory</value>
+				<value>com.ssh.sakila.pojo.Customer</value>
+				<value>com.ssh.sakila.pojo.FilmActor</value>
+				<value>com.ssh.sakila.pojo.FilmText</value>
+				<value>com.ssh.sakila.pojo.Payment</value>
+				<value>com.ssh.sakila.pojo.TestAuto</value>
+				</list>
+		</property></bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="StaffDAO" class="com.ssh.sakila.dao.StaffDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CityDAO" class="com.ssh.sakila.dao.CityDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CountryDAO" class="com.ssh.sakila.dao.CountryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="LanguageDAO" class="com.ssh.sakila.dao.LanguageDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FilmDAO" class="com.ssh.sakila.dao.FilmDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AddressDAO" class="com.ssh.sakila.dao.AddressDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="RentalDAO" class="com.ssh.sakila.dao.RentalDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CategoryDAO" class="com.ssh.sakila.dao.CategoryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FilmCategoryDAO"
+		class="com.ssh.sakila.dao.FilmCategoryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="StoreDAO" class="com.ssh.sakila.dao.StoreDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- 演员信息模块 -->
+	<bean id="ActorDAO" class="com.ssh.sakila.dao.ActorDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ActorService" class="com.ssh.sakila.service.ActorService">
+        <property name="actorDao">
+			<ref bean="ActorDAO"/>
+        </property>
+	</bean>
+	<bean id="FilmActorService" class="com.ssh.sakila.service.FilmActorService">
+        <property name="filmActorDao">
+			<ref bean="FilmActorDAO"/>
+        </property>
+	</bean>
+	<bean id="ActorAction" class="com.ssh.sakila.action.ActorAction">
+        <property name="actorService">
+			<ref bean="ActorService"/>
+        </property>
+        <property name="filmActorService">
+			<ref bean="FilmActorService"/>
+        </property>
+	</bean>
+	<!-- 演员信息模块 -->
+	
+	<bean id="InventoryDAO" class="com.ssh.sakila.dao.InventoryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CustomerDAO" class="com.ssh.sakila.dao.CustomerDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FilmActorDAO" class="com.ssh.sakila.dao.FilmActorDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FilmTextDAO" class="com.ssh.sakila.dao.FilmTextDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PaymentDAO" class="com.ssh.sakila.dao.PaymentDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="FileUpload" class="com.ssh.sakila.action.FileUploadAction">
+        
+	</bean>
+</beans>

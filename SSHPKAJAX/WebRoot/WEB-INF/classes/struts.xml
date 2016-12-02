@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 设定编码 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	
+	<!-- 设置上传文件大小 -->  
+    <constant name="struts.multipart.maxSize" value="1024000000"/>
+	
+	<package name="sakila" extends="struts-default,json-default">
+        <action name="actorAction"  class="ActorAction">
+			<result name="success">/success.jsp</result>
+			<result name="pages">/page.jsp</result>
+        </action>
+        
+        <action name="findActorJson"  class="ActorAction">
+		    <result type="json" name="success">
+		    	<param name="root">jsonResult</param>
+		    </result>
+	    </action>
+	    
+	    <action name="uploadFile" class="FileUpload">
+            <param name="savePath">/upload</param>
+        </action>
+        
+	</package>
+</struts>    
